@@ -23,12 +23,12 @@ function unitprices_page_init(){
     var price = $('#add_price').val();
     var amount = $('#add_amount').val();
     var group = $('#add_group').val();
-    if ( price == ""){ return; }
-    if ( amount == ""){ return; }
-    if ( group == ""){ return; }
+    if ( price == ""){ price = 250; }
+    if ( amount == ""){ amount = 27.5; }
+    if ( group == ""){ group = 12 }
 
     var unit = (price / (amount * group)).toFixed(3)
-    var $unit = $('<li/>').attr("data-unit",unit).data('theme',"c").html(unit + "円/m " + price + "円 " + amount + "m " + group + "ロール");
+    var $unit = $('<li/>').attr("data-unit",unit).data('theme',"c").html('<span class="unit">' + unit + "円/m </span>" + price + "円 " + amount + "m " + group + "ロール");
     $unit.hide();
 
     var before_count = $('#unit_list li').size();
@@ -50,8 +50,8 @@ function unitprices_page_init(){
       if ( before_count == 0 ){ $unit.data('theme',"e"); }
     }
 
-    $('#unit_list').listview('refresh');
     $unit.fadeIn();
+    $('#unit_list').listview('refresh');
 
     $('#add_price').val("");
     $('#add_amount').val("");

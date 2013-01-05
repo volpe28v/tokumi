@@ -11,3 +11,8 @@
  *= require_self
  *= require jquery.mobile
 */
+
+.unit {
+  color: red;
+}
+
