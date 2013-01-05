@@ -2,6 +2,7 @@ class UnitpricesController < ApplicationController
   # GET /unitprices
   # GET /unitprices.json
   def index
+    @unitprice = Unitprice.new(params[:unitprice])
     @unitprices = Unitprice.all
 
     respond_to do |format|

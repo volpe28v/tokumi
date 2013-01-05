@@ -1,31 +1,18 @@
-<h1>Listing unitprices</h1>
-
-<table>
-  <tr>
-    <th>Price</th>
-    <th>Amount</th>
-    <th>Unit</th>
-    <th>Product</th>
-    <th>Shop</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<div data-role="content">
+  <div data-role="fieldcontain">
+    <input type="text" class="add-reply-form-msg" data-mini="true" maxlength="50" data-inline="true" placeholder="250 50 12"></input>
+    <a data-role="button" class="add-reply-button" data-mini="true" data-inline="true">Send</a>
+  </div>
+ 
 <% @unitprices.each do |unitprice| %>
   <tr>
     <td><%= unitprice.price %></td>
     <td><%= unitprice.amount %></td>
     <td><%= unitprice.unit %></td>
-    <td><%= unitprice.product_id %></td>
-    <td><%= unitprice.shop_id %></td>
     <td><%= link_to 'Show', unitprice %></td>
     <td><%= link_to 'Edit', edit_unitprice_path(unitprice) %></td>
     <td><%= link_to 'Destroy', unitprice, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Unitprice', new_unitprice_path %>
+</div>
