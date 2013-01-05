@@ -1,8 +1,9 @@
 Tokumi::Application.routes.draw do
+
+  root :to => "unitprices#index"
+
   resources :shops
-
   resources :products
-
   resources :unitprices
 
   # The priority is based upon order of creation:
