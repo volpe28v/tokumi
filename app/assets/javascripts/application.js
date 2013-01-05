@@ -56,7 +56,12 @@ function unitprices_page_init(){
     $('#add_price').val("");
     $('#add_amount').val("");
     $('#add_group').val("");
+  });
 
+  $('#clear_button').click(function(){
+    $('#unit_list li').fadeOut("normal",function(){
+      $('#unit_list').empty();
+    });
   });
 }
 
