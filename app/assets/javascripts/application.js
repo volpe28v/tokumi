@@ -19,7 +19,6 @@ $( '#unitprices_page' ).live( 'pageinit',function(event){
 });
 
 function unitprices_page_init(){
-  var units = new Array();
   $('#add_button').click(function(){
     var price = $('#add_price').val();
     var amount = $('#add_amount').val();
@@ -29,14 +28,7 @@ function unitprices_page_init(){
     if ( group == ""){ return; }
 
     var unit = (price / (amount * group)).toFixed(3)
-    units.push({
-      unit: unit,
-      price: price,
-      amount: amount,
-      group: group
-    });
-
-    var $unit = $('<li/>').attr("data-unit",unit).html(unit + "円/m " + price + "円 " + amount + "m " + group + "ロール");
+    var $unit = $('<li/>').attr("data-unit",unit).data('theme',"c").html(unit + "円/m " + price + "円 " + amount + "m " + group + "ロール");
     $unit.hide();
 
     var before_count = $('#unit_list li').size();
@@ -44,12 +36,18 @@ function unitprices_page_init(){
       console.log($(this).data('unit'));
       if ( $(this).data('unit') > unit ){
         $unit.insertBefore($(this));
+        if ( $(this).hasClass("ui-btn-up-e") ){
+          $(this).removeClass("ui-btn-up-e");
+          $(this).addClass("ui-btn-up-c");
+          $unit.data('theme',"e");
+        }
         return false;
       }
     });
 
     if ( before_count == $('#unit_list li').size() ){
       $('#unit_list').append($unit);
+      if ( before_count == 0 ){ $unit.data('theme',"e"); }
     }
 
     $('#unit_list').listview('refresh');
