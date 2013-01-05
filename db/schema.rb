@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20130105093021) do
 
   create_table "unitprices", :force => true do |t|
     t.integer  "price"
-    t.integer  "amount"
+    t.float    "amount"
     t.float    "unit"
     t.integer  "product_id"
     t.integer  "shop_id"
