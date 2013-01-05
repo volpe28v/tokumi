@@ -1,18 +1,55 @@
+<div data-role="header">
+  <h1>とくみちゃん</h1>
+</div>
+
 <div data-role="content">
-  <div data-role="fieldcontain">
-    <input type="text" class="add-reply-form-msg" data-mini="true" maxlength="50" data-inline="true" placeholder="250 50 12"></input>
-    <a data-role="button" class="add-reply-button" data-mini="true" data-inline="true">Send</a>
-  </div>
- 
+  <p>
+  <div class="ui-grid-b">
+    <div class="ui-block-a">
+      <input type="tel" id="add_price" data-mini="true" size="2" placeholder="250円" />
+    </div>
+    <div class="ui-block-b">
+      <input type="tel" id="add_amount" data-mini="true" maxlength="50" placeholder="50m" />
+    </div>
+    <div class="ui-block-c">
+      <input type="tel" id="add_group" data-mini="true" maxlength="50" placeholder="12ロール" />
+    </div>
+  </div><!-- /grid-a -->
+  <a data-role="button" id="add_button" data-mini="true">計算する</a>
+
+  </p>
+  <ul id="unit_list" data-role="listview"></ul>
+
+<!--
 <% @unitprices.each do |unitprice| %>
   <tr>
+    <td><%= unitprice.unit %></td>
     <td><%= unitprice.price %></td>
     <td><%= unitprice.amount %></td>
-    <td><%= unitprice.unit %></td>
+    <td><%= unitprice.group %></td>
     <td><%= link_to 'Show', unitprice %></td>
     <td><%= link_to 'Edit', edit_unitprice_path(unitprice) %></td>
     <td><%= link_to 'Destroy', unitprice, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
-</table>
+-->
 </div>
+
+<script>
+  var units = new Array();
+  $('#add_button').click(function(){
+    var price = $('#add_price').val();
+    var amount = $('#add_amount').val();
+    var group = $('#add_group').val();
+    var unit = price / (amount * group)
+
+    var $unit = $('<li/>').html(unit.toFixed(2) + " " + price + "円 " + amount + "m " + group + "ロール");
+    $('#unit_list').prepend($unit);
+    $('#unit_list').listview('refresh');
+
+
+  });
+
+
+</script>
+
