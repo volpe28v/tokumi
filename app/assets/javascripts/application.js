@@ -13,3 +13,52 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.mobile
+
+$( '#unitprices_page' ).live( 'pageinit',function(event){
+  unitprices_page_init();
+});
+
+function unitprices_page_init(){
+  var units = new Array();
+  $('#add_button').click(function(){
+    var price = $('#add_price').val();
+    var amount = $('#add_amount').val();
+    var group = $('#add_group').val();
+    if ( price == ""){ return; }
+    if ( amount == ""){ return; }
+    if ( group == ""){ return; }
+
+    var unit = (price / (amount * group)).toFixed(3)
+    units.push({
+      unit: unit,
+      price: price,
+      amount: amount,
+      group: group
+    });
+
+    var $unit = $('<li/>').attr("data-unit",unit).html(unit + "円/m " + price + "円 " + amount + "m " + group + "ロール");
+    $unit.hide();
+
+    var before_count = $('#unit_list li').size();
+    $('#unit_list li').each(function(){
+      console.log($(this).data('unit'));
+      if ( $(this).data('unit') > unit ){
+        $unit.insertBefore($(this));
+        return false;
+      }
+    });
+
+    if ( before_count == $('#unit_list li').size() ){
+      $('#unit_list').append($unit);
+    }
+
+    $('#unit_list').listview('refresh');
+    $unit.fadeIn();
+
+    $('#add_price').val("");
+    $('#add_amount').val("");
+    $('#add_group').val("");
+
+  });
+}
+

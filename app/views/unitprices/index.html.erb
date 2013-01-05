@@ -1,9 +1,9 @@
+<div data-role="page" id="unitprices_page">
 <div data-role="header">
   <h1>とくみちゃん</h1>
 </div>
 
 <div data-role="content">
-  <p>
   <div class="ui-grid-b">
     <div class="ui-block-a">
       <input type="tel" id="add_price" data-mini="true" size="2" placeholder="250円" />
@@ -15,9 +15,9 @@
       <input type="tel" id="add_group" data-mini="true" maxlength="50" placeholder="12ロール" />
     </div>
   </div><!-- /grid-a -->
-  <a data-role="button" id="add_button" data-mini="true">計算する</a>
+  <a data-role="button" id="add_button" data-mini="true">単価を計算する</a>
 
-  </p>
+  </br>
   <ul id="unit_list" data-role="listview"></ul>
 
 <!--
@@ -34,22 +34,5 @@
 <% end %>
 -->
 </div>
-
-<script>
-  var units = new Array();
-  $('#add_button').click(function(){
-    var price = $('#add_price').val();
-    var amount = $('#add_amount').val();
-    var group = $('#add_group').val();
-    var unit = price / (amount * group)
-
-    var $unit = $('<li/>').html(unit.toFixed(2) + " " + price + "円 " + amount + "m " + group + "ロール");
-    $('#unit_list').prepend($unit);
-    $('#unit_list').listview('refresh');
-
-
-  });
-
-
-</script>
+</div>
 
