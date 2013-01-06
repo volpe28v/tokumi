@@ -2,9 +2,9 @@ Tokumi::Application.routes.draw do
 
   root :to => "products#index"
 
-  resources :shops
-  resources :products
-  resources :unitprices
+  resources :products , :only => %w[index show]
+#  resources :shops
+#  resources :unitprices
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
