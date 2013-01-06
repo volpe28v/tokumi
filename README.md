@@ -1,7 +1,17 @@
 # とくみちゃん
 
-よくある単価計算アプリです。
+よくある日用品の単価計算アプリです。
 スーパーなどでトイレットペーパーを買う際にどれがお得か計算してくれます。
+
+# 目的
+
+Backbone.js の練習として、
+いったん普通のjQueryで記述したコードを、
+Backbone.js を使って書き換えてみます。
+
+# デモ
+
+http://tokumi.herokuapp.com/
 
 ## License
 (The MIT License)
