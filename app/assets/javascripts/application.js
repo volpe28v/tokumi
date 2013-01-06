@@ -32,7 +32,7 @@ function unitprices_page_init(){
     if ( amount == ""){ amount = 27.5; }
     if ( group == ""){ group = 12 }
 
-    var unitprice = ((price / (amount * group)) * rate).toFixed(3)
+    var unitprice = ((price / (amount * group)) * rate).toFixed(2)
     var $unit = $('<li/>')
       .attr("data-unitprice",unitprice)
       .css('display', 'none')

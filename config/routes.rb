@@ -1,6 +1,6 @@
 Tokumi::Application.routes.draw do
 
-  root :to => "unitprices#index"
+  root :to => "products#index"
 
   resources :shops
   resources :products
