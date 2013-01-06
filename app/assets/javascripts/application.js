@@ -15,10 +15,10 @@
 //= require jqm_setup
 //= require jquery.mobile
 
-$( '#unitprices_page' ).live( 'pageinit',function(event){
-  unitprices_page_init();
+$( '#product_page' ).live( 'pageinit',function(event){
+  product_page_init();
 
-  $('#unitprices_page').delegate('.move-page','click',function(){
+  $('#product_page').delegate('.move-page','click',function(){
     var url = $(this).attr('href');
     location.href = url;
     return false;
@@ -33,7 +33,7 @@ $( '#products_page' ).live( 'pageinit',function(event){
   });
 });
 
-function unitprices_page_init(){
+function product_page_init(){
   $('#add_button').click(function(){
     var price = $('#add_price').val();
     var amount = $('#add_amount').val();
@@ -42,9 +42,9 @@ function unitprices_page_init(){
     var amount_unit = $('#add_amount').data('unit');
     var group_unit = $('#add_group').data('unit');
 
-    if ( price == ""){ price = $('#add_price').data('default'); }
-    if ( amount == ""){ amount = $('#add_amount').data('default'); }
-    if ( group == ""){ group = $('#add_group').data('default'); }
+    if ( price == "" || isNaN(price) ){ price = $('#add_price').data('default'); }
+    if ( amount == "" || isNaN(amount) ){ amount = $('#add_amount').data('default'); }
+    if ( group == "" || isNaN(group) ){ group = $('#add_group').data('default'); }
 
     var unitprice = ((price / (amount * group)) * rate).toFixed(2)
     var $unit = $('<li/>')
@@ -90,7 +90,7 @@ function unitprices_page_init(){
     });
   });
 
-  $('#unitprices_page').delegate('li','swiperight',function(){
+  $('#unit_list').delegate('li','swiperight',function(){
     var $li = $(this);
     if ( $li.hasClass("ui-btn-up-e") ){
       var $next_li = $li.next('li');
