@@ -60,7 +60,7 @@ function unitprices_page_init(){
 
     var before_count = $('#unit_list li').size();
     $('#unit_list li').each(function(){
-      if ( $(this).data('unitprice') > unitprice ){
+      if ( parseFloat($(this).data('unitprice')) > parseFloat(unitprice) ){
         $unit.insertBefore($(this));
         if ( $(this).hasClass("ui-btn-up-e") ){
           $(this).removeClass("ui-btn-up-e");
