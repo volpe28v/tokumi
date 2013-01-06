@@ -9,6 +9,11 @@ Backbone.js の練習として、
 いったん普通のjQueryで記述したコードを、
 Backbone.js を使って書き換えてみます。
 
+・jQuery で基本機能をコーディング(Viewのみ)
+・Backboneに置き換え -------------- いまここ
+・DB登録処理
+・あとは気が赴くままに・・・
+
 # デモ
 
 http://tokumi.herokuapp.com/
