@@ -17,6 +17,20 @@
 
 $( '#unitprices_page' ).live( 'pageinit',function(event){
   unitprices_page_init();
+
+  $('#unitprices_page').delegate('.move-page','click',function(){
+    var url = $(this).attr('href');
+    location.href = url;
+    return false;
+  });
+});
+
+$( '#products_page' ).live( 'pageinit',function(event){
+  $('#product_list').delegate('a','click',function(){
+    var url = $(this).attr('href');
+    location.href = url;
+    return false;
+  });
 });
 
 function unitprices_page_init(){
@@ -28,9 +42,9 @@ function unitprices_page_init(){
     var amount_unit = $('#add_amount').data('unit');
     var group_unit = $('#add_group').data('unit');
 
-    if ( price == ""){ price = 250; }
-    if ( amount == ""){ amount = 27.5; }
-    if ( group == ""){ group = 12 }
+    if ( price == ""){ price = $('#add_price').data('default'); }
+    if ( amount == ""){ amount = $('#add_amount').data('default'); }
+    if ( group == ""){ group = $('#add_group').data('default'); }
 
     var unitprice = ((price / (amount * group)) * rate).toFixed(2)
     var $unit = $('<li/>')
@@ -39,7 +53,7 @@ function unitprices_page_init(){
       .data('theme',"c")
       .append($('<span/>')
         .addClass("unit")
-        .html(rate + amount_unit + "あたりの単価 " + unitprice + "円"))
+        .html(unitprice + "円 (" + rate + amount_unit + "あたりの単価)"))
       .append($('<p/>')
         .addClass("unit-body")
         .html(price + "円 " + amount + amount_unit + " " + group + group_unit));
