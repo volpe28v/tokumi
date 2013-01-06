@@ -28,12 +28,19 @@ function unitprices_page_init(){
     if ( group == ""){ group = 12 }
 
     var unit = (price / (amount * group)).toFixed(3)
-    var $unit = $('<li/>').attr("data-unit",unit).data('theme',"c").html('<span class="unit">' + unit + "円/m </span>" + price + "円 " + amount + "m " + group + "ロール");
-    $unit.hide();
+    var $unit = $('<li/>')
+      .attr("data-unit",unit)
+      .css('display', 'none')
+      .data('theme',"c")
+      .append($('<span/>')
+        .addClass("unit")
+        .html("1mあたりの単価 " + unit + "円"))
+      .append($('<p/>')
+        .addClass("unit-body")
+        .html(price + "円 " + amount + "m " + group + "ロール"));
 
     var before_count = $('#unit_list li').size();
     $('#unit_list li').each(function(){
-      console.log($(this).data('unit'));
       if ( $(this).data('unit') > unit ){
         $unit.insertBefore($(this));
         if ( $(this).hasClass("ui-btn-up-e") ){
@@ -50,7 +57,7 @@ function unitprices_page_init(){
       if ( before_count == 0 ){ $unit.data('theme',"e"); }
     }
 
-    $unit.fadeIn();
+    $unit.fadeIn('fast');
     $('#unit_list').listview('refresh');
 
     $('#add_price').val("");
@@ -62,6 +69,17 @@ function unitprices_page_init(){
     $('#unit_list li').fadeOut("normal",function(){
       $('#unit_list').empty();
     });
+  });
+
+  $('#unitprices_page').delegate('li','swiperight',function(){
+    var $li = $(this);
+    if ( $li.hasClass("ui-btn-up-e") ){
+      var $next_li = $li.next('li');
+      $next_li.removeClass("ui-btn-up-c");
+      $next_li.addClass("ui-btn-up-e");
+    }
+    $li.remove();
+    $('#unit_list').listview('refresh');
   });
 }
 

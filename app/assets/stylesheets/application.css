@@ -14,5 +14,9 @@
 
 .unit {
   color: red;
+  font-size: larger;
 }
 
+.unit-body {
+  margin-left: 10px;
+}
