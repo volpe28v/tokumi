@@ -1,15 +1,24 @@
-<p id="notice"><%= notice %></p>
+<div data-role="page" id="unitprices_page">
+  <div data-role="header">
+    <h1><%= @product.name %></h1>
+    <a id="clear_button" class="ui-btn-left" data-icon="delete">Clear</a>
+  </div>
 
-<p>
-  <b>Name:</b>
-  <%= @product.name %>
-</p>
+  <div data-role="content">
+    <div class="ui-grid-b">
+      <div class="ui-block-a">
+        <input type="tel" id="add_price" data-mini="true" placeholder="250円" />
+      </div>
+      <div class="ui-block-b">
+        <input type="tel" id="add_amount" data-mini="true" data-unit="<%= @product.amount_unit %>" data-rate="<%= @product.rate %>" maxlength="50" placeholder="<%= @product.amount_unit %>" />
+      </div>
+      <div class="ui-block-c">
+        <input type="tel" id="add_group" data-mini="true" data-unit="<%= @product.group_unit %>" maxlength="50" placeholder="<%= @product.group_unit %>" />
+      </div>
+    </div><!-- /grid-a -->
+    <a data-role="button" id="add_button" data-mini="false">単価を計算する</a>
 
-<p>
-  <b>Rate:</b>
-  <%= @product.rate %>
-</p>
+    <ul id="unit_list" data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="c"></ul>
+  </div>
+</div>
 
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>

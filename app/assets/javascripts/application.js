@@ -23,25 +23,29 @@ function unitprices_page_init(){
     var price = $('#add_price').val();
     var amount = $('#add_amount').val();
     var group = $('#add_group').val();
+    var rate = $('#add_amount').data('rate');
+    var amount_unit = $('#add_amount').data('unit');
+    var group_unit = $('#add_group').data('unit');
+
     if ( price == ""){ price = 250; }
     if ( amount == ""){ amount = 27.5; }
     if ( group == ""){ group = 12 }
 
-    var unit = (price / (amount * group)).toFixed(3)
+    var unitprice = ((price / (amount * group)) * rate).toFixed(3)
     var $unit = $('<li/>')
-      .attr("data-unit",unit)
+      .attr("data-unitprice",unitprice)
       .css('display', 'none')
       .data('theme',"c")
       .append($('<span/>')
         .addClass("unit")
-        .html("1mあたりの単価 " + unit + "円"))
+        .html(rate + amount_unit + "あたりの単価 " + unitprice + "円"))
       .append($('<p/>')
         .addClass("unit-body")
-        .html(price + "円 " + amount + "m " + group + "ロール"));
+        .html(price + "円 " + amount + amount_unit + " " + group + group_unit));
 
     var before_count = $('#unit_list li').size();
     $('#unit_list li').each(function(){
-      if ( $(this).data('unit') > unit ){
+      if ( $(this).data('unitprice') > unitprice ){
         $unit.insertBefore($(this));
         if ( $(this).hasClass("ui-btn-up-e") ){
           $(this).removeClass("ui-btn-up-e");
