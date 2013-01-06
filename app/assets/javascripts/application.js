@@ -10,15 +10,19 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require jquery
 //= require underscore
 //= require backbone 
-//= require jquery
 //= require jquery_ujs
 //= require jqm_setup
 //= require jquery.mobile
+//= require products.js
 
 $( '#product_page' ).live( 'pageinit',function(event){
-  product_page_init();
+  // 通常版
+//  product_page_init();
+  // Backbone.js 版
+  var view = new ProductView();
 
   $('#product_page').delegate('.move-page','click',function(){
     var url = $(this).attr('href');
