@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jqm_setup
 //= require jquery.mobile
 
 $( '#unitprices_page' ).live( 'pageinit',function(event){

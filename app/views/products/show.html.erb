@@ -1,7 +1,8 @@
 <div data-role="page" id="unitprices_page">
   <div data-role="header">
     <h1><%= @product.name %></h1>
-    <a id="clear_button" class="ui-btn-left" data-icon="delete">Clear</a>
+    <%= link_to "商品一覧", products_path, :class => "ui-btn-left" %>
+    <a id="clear_button" class="ui-btn-right" data-icon="delete">Clear</a>
   </div>
 
   <div data-role="content">
