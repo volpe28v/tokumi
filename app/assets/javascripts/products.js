@@ -73,7 +73,15 @@ var ProductView = Backbone.View.extend({
     this.collection.add(unitprice);
   },
   removeUnitPrice: function(e){
-    //TODO: UnitPriceを削除する.どうやって対象liを取得するか？
+    //TODO: とりあえず画面からは削除できたが、collectionから削除したい。
+    var $li= $(e.target).closest('li');
+    if ( $li.hasClass("ui-btn-up-e") ){
+      var $next_li = $li.next('li');
+      $next_li.removeClass("ui-btn-up-c");
+      $next_li.addClass("ui-btn-up-e");
+    }
+    $li.remove();
+    $('#unit_list').listview('refresh');
   },
   clearUnitPrices: function(){
     this.collection.reset();
