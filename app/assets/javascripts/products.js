@@ -1,6 +1,6 @@
 var UnitPrice = Backbone.Model.extend({
-  initialize: function(){
-
+  initialize: function(data){
+    this.set({value: ((data.price / (data.amount * data.group)) * data.rate).toFixed(2)});
   }
 });
 
@@ -43,10 +43,6 @@ var ProductView = Backbone.View.extend({
 
     $unitprice_el.fadeIn('fast');
     $('#unit_list').listview('refresh');
-
-    $('#add_price').val("");
-    $('#add_amount').val("");
-    $('#add_group').val("");
   },
   render_clear: function(){
     $('#unit_list li').fadeOut("normal",function(){
@@ -59,17 +55,19 @@ var ProductView = Backbone.View.extend({
     var group = $('#add_group').val();
     var rate = $('#add_amount').data('rate');
 
+    $('#add_price').val("");
+    $('#add_amount').val("");
+    $('#add_group').val("");
+
     if ( price == "" || isNaN(price) ){ price = $('#add_price').data('default'); }
     if ( amount == "" || isNaN(amount) ){ amount = $('#add_amount').data('default'); }
     if ( group == "" || isNaN(group) ){ group = $('#add_group').data('default'); }
 
-    var unitprice_value = ((price / (amount * group)) * rate).toFixed(2);
-
     var unitprice = new UnitPrice({
-      value: unitprice_value,
       price: price,
       amount: amount,
-      group: group
+      group: group,
+      rate: rate
     });
 
     this.collection.add(unitprice);
