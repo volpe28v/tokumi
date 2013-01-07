@@ -18,6 +18,7 @@ var ProductView = Backbone.View.extend({
   initialize: function(){
     this.collection = new UnitPrices();
     this.collection.bind("add", this.render, this);
+    this.collection.bind("reset", this.render_clear, this);
   },
   render: function(unitprice){
     var $unitprice_el = this.template(unitprice);
@@ -47,10 +48,10 @@ var ProductView = Backbone.View.extend({
     $('#add_amount').val("");
     $('#add_group').val("");
   },
-  render_clear: function(unitprice){
-    console.log("render_clear");
-    console.log(unitprice);
-
+  render_clear: function(){
+    $('#unit_list li').fadeOut("normal",function(){
+      $('#unit_list').empty();
+    });
   },
   addUnitPrice: function(){
     var price = $('#add_price').val();
@@ -77,11 +78,7 @@ var ProductView = Backbone.View.extend({
     //TODO: UnitPriceを削除する.どうやって対象liを取得するか？
   },
   clearUnitPrices: function(){
-    console.log("clearUnitPrices");
-    //TODO: backbone化する
-    $('#unit_list li').fadeOut("normal",function(){
-      $('#unit_list').empty();
-    });
+    this.collection.reset();
   },
   template: function(unitprice){
     var rate = $('#add_amount').data('rate');
