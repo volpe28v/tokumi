@@ -10,8 +10,12 @@ var UnitPriceList = Backbone.Collection.extend({
 
 var UnitPriceView = Backbone.View.extend({
   tagName: 'li',
-
+  events: {
+    "swiperight": function() { this.model.destroy(); }
+  },
   initialize: function(){
+    this.model.on('destroy',this.remove,this);
+
     var unitpriceHtml = this.template(this.model);
     this.$el.html(unitpriceHtml)
       .attr("data-unitprice",this.model.get("value"))
@@ -37,15 +41,27 @@ var ProductView = Backbone.View.extend({
   el: "#product_page",
   events: {
     "click #add_button": "addUnitPrice",
-    "click #clear_button": "clearUnitPriceList",
-    "swiperight li": "removeUnitPrice"
+    "click #clear_button": "clearUnitPriceList"
   },
   initialize: function(){
     this.collection = new UnitPriceList();
-    this.collection.bind("add", this.render, this);
-    this.collection.bind("reset", this.render_clear, this);
+    this.collection.on("add", this.addOne, this);
+    this.collection.on("reset", this.clearAll, this);
+    this.collection.on("all", this.render, this);
   },
-  render: function(unitprice){
+  render: function(){
+    $('#unit_list li').each(function(i){
+      if ( i == 0 ){
+        $(this).removeClass("ui-btn-up-c");
+        $(this).addClass("ui-btn-up-e");
+      }else{
+        $(this).removeClass("ui-btn-up-e");
+        $(this).addClass("ui-btn-up-c");
+      }
+    });
+    $('#unit_list').listview('refresh');
+  },
+  addOne: function(unitprice){
     var unitpriceView = new UnitPriceView({model: unitprice});
     var $unitprice_el = unitpriceView.$el;
 
@@ -53,24 +69,17 @@ var ProductView = Backbone.View.extend({
     $('#unit_list li').each(function(){
       if ( parseFloat($(this).data('unitprice')) > parseFloat(unitprice.get("value")) ){
         $unitprice_el.insertBefore($(this));
-        if ( $(this).hasClass("ui-btn-up-e") ){
-          $(this).removeClass("ui-btn-up-e");
-          $(this).addClass("ui-btn-up-c");
-          $unitprice_el.data('theme',"e");
-        }
         return false;
       }
     });
 
     if ( before_count == $('#unit_list li').size() ){
       $('#unit_list').append($unitprice_el);
-      if ( before_count == 0 ){ $unitprice_el.data('theme',"e"); }
     }
 
     $unitprice_el.fadeIn('fast');
-    $('#unit_list').listview('refresh');
   },
-  render_clear: function(){
+  clearAll: function(){
     $('#unit_list li').fadeOut("normal",function(){
       $('#unit_list').empty();
     });
@@ -97,17 +106,6 @@ var ProductView = Backbone.View.extend({
     });
 
     this.collection.add(unitprice);
-  },
-  removeUnitPrice: function(e){
-    //TODO: とりあえず画面からは削除できたが、collectionから削除したい。
-    var $li= $(e.target).closest('li');
-    if ( $li.hasClass("ui-btn-up-e") ){
-      var $next_li = $li.next('li');
-      $next_li.removeClass("ui-btn-up-c");
-      $next_li.addClass("ui-btn-up-e");
-    }
-    $li.remove();
-    $('#unit_list').listview('refresh');
   },
   clearUnitPriceList: function(){
     this.collection.reset();
