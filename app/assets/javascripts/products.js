@@ -4,24 +4,50 @@ var UnitPrice = Backbone.Model.extend({
   }
 });
 
-var UnitPrices = Backbone.Collection.extend({
+var UnitPriceList = Backbone.Collection.extend({
   model: UnitPrice
+});
+
+var UnitPriceView = Backbone.View.extend({
+  tagName: 'li',
+
+  initialize: function(){
+    var unitpriceHtml = this.template(this.model);
+    this.$el.html(unitpriceHtml)
+      .attr("data-unitprice",this.model.get("value"))
+      .css('display', 'none')
+      .data('theme',"c");
+  },
+  template: function(unitprice){
+    var rate = $('#add_amount').data('rate');
+    var amount_unit = $('#add_amount').data('unit');
+    var group_unit = $('#add_group').data('unit');
+
+    return $('<span/>')
+      .append($('<span/>')
+        .addClass("unit")
+        .html(unitprice.get("value") + "円 (" + rate + amount_unit + "あたりの単価)"))
+      .append($('<p/>')
+        .addClass("unit-body")
+        .html(unitprice.get("price") + "円 " + unitprice.get("amount") + amount_unit + " " + unitprice.get("group") + group_unit));
+  }
 });
 
 var ProductView = Backbone.View.extend({
   el: "#product_page",
   events: {
     "click #add_button": "addUnitPrice",
-    "click #clear_button": "clearUnitPrices",
+    "click #clear_button": "clearUnitPriceList",
     "swiperight li": "removeUnitPrice"
   },
   initialize: function(){
-    this.collection = new UnitPrices();
+    this.collection = new UnitPriceList();
     this.collection.bind("add", this.render, this);
     this.collection.bind("reset", this.render_clear, this);
   },
   render: function(unitprice){
-    var $unitprice_el = this.template(unitprice);
+    var unitpriceView = new UnitPriceView({model: unitprice});
+    var $unitprice_el = unitpriceView.$el;
 
     var before_count = $('#unit_list li').size();
     $('#unit_list li').each(function(){
@@ -83,23 +109,7 @@ var ProductView = Backbone.View.extend({
     $li.remove();
     $('#unit_list').listview('refresh');
   },
-  clearUnitPrices: function(){
+  clearUnitPriceList: function(){
     this.collection.reset();
-  },
-  template: function(unitprice){
-    var rate = $('#add_amount').data('rate');
-    var amount_unit = $('#add_amount').data('unit');
-    var group_unit = $('#add_group').data('unit');
-
-    return $('<li/>')
-      .attr("data-unitprice",unitprice.get("value"))
-      .css('display', 'none')
-      .data('theme',"c")
-      .append($('<span/>')
-        .addClass("unit")
-        .html(unitprice.get("value") + "円 (" + rate + amount_unit + "あたりの単価)"))
-      .append($('<p/>')
-        .addClass("unit-body")
-        .html(unitprice.get("price") + "円 " + unitprice.get("amount") + amount_unit + " " + unitprice.get("group") + group_unit));
   }
 });
