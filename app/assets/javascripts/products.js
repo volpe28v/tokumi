@@ -22,7 +22,6 @@ var UnitPriceView = Backbone.View.extend({
     this.$el.html(unitpriceHtml)
       .attr("data-unitprice",this.model.get("value"))
       .css('display', 'none')
-      .data('theme',"c");
   },
   template: function(unitprice){
     var rate = $('#add_amount').data('rate');
