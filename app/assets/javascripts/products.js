@@ -34,7 +34,12 @@ var UnitPriceView = Backbone.View.extend({
         .html(unitprice.get("value") + "円 (" + rate + amount_unit + "あたりの単価)"))
       .append($('<p/>')
         .addClass("unit-body")
-        .html(unitprice.get("price") + "円 " + unitprice.get("amount") + amount_unit + " " + unitprice.get("group") + group_unit));
+        .append($('<span/>')
+          .html(unitprice.get("price") + "円"))
+        .append($('<span/>')
+          .html(unitprice.get("amount") + amount_unit))
+        .append($('<span/>')
+          .html(unitprice.get("group") + group_unit)));
   }
 });
 
