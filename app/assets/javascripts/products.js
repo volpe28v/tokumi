@@ -15,7 +15,9 @@ var UnitPriceView = Backbone.View.extend({
   },
   initialize: function(){
     this.model.on('destroy',this.remove,this);
-
+    this.render();
+  },
+  render: function(){
     var unitpriceHtml = this.template(this.model);
     this.$el.html(unitpriceHtml)
       .attr("data-unitprice",this.model.get("value"))
