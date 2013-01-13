@@ -1,5 +1,20 @@
 var Product = Backbone.Model.extend({
   initialize: function(){
+  },
+  get_price: function(price){
+    return this.get_valid_value(price,"price");
+  },
+  get_amount: function(amount){
+    return this.get_valid_value(amount,"amount");
+  },
+  get_group: function(group){
+    return this.get_valid_value(group,"group");
+  },
+  get_valid_value: function(value, type){
+    if ( value == "" || isNaN(value) ){ 
+      value = this.get("default_" + type); 
+    }
+    return value;
   }
 });
 
@@ -61,6 +76,9 @@ var ProductView = Backbone.View.extend({
       rate: $('#add_amount').data('rate'),
       amount_unit: $('#add_amount').data('unit'),
       group_unit: $('#add_group').data('unit'),
+      default_price: $('#add_price').data('default'),
+      default_amount: $('#add_amount').data('default'),
+      default_group: $('#add_group').data('default')
     });
  
     this.collection.on("add", this.addOne, this);
@@ -106,17 +124,13 @@ var ProductView = Backbone.View.extend({
     });
   },
   addUnitPrice: function(){
-    var price = $('#add_price').val();
-    var amount = $('#add_amount').val();
-    var group = $('#add_group').val();
+    var price = this.model.get_price($('#add_price').val());
+    var amount = this.model.get_amount($('#add_amount').val());
+    var group = this.model.get_group($('#add_group').val());
 
     $('#add_price').val("");
     $('#add_amount').val("");
     $('#add_group').val("");
-
-    if ( price == "" || isNaN(price) ){ price = $('#add_price').data('default'); }
-    if ( amount == "" || isNaN(amount) ){ amount = $('#add_amount').data('default'); }
-    if ( group == "" || isNaN(group) ){ group = $('#add_group').data('default'); }
 
     var unitprice = new UnitPrice({
       price: price,
