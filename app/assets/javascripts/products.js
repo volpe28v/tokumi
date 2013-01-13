@@ -1,10 +1,5 @@
 var Product = Backbone.Model.extend({
   initialize: function(){
-    this.set({
-      rate: $('#add_amount').data('rate'),
-      amount_unit: $('#add_amount').data('unit'),
-      group_unit: $('#add_group').data('unit'),
-    });
   }
 });
 
@@ -62,7 +57,12 @@ var ProductView = Backbone.View.extend({
   },
   initialize: function(){
     this.collection = new UnitPriceList();
-    this.model = new Product();
+    this.model = new Product({
+      rate: $('#add_amount').data('rate'),
+      amount_unit: $('#add_amount').data('unit'),
+      group_unit: $('#add_group').data('unit'),
+    });
+ 
     this.collection.on("add", this.addOne, this);
     this.collection.on("reset", this.clearAll, this);
     this.collection.on("all", this.render, this);
