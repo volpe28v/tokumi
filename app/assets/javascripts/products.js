@@ -1,3 +1,13 @@
+var Product = Backbone.Model.extend({
+  initialize: function(){
+    this.set({
+      rate: $('#add_amount').data('rate'),
+      amount_unit: $('#add_amount').data('unit'),
+      group_unit: $('#add_group').data('unit'),
+    });
+  }
+});
+
 var UnitPrice = Backbone.Model.extend({
   initialize: function(data){
     this.set({value: ((data.price / (data.amount * data.group)) * data.rate).toFixed(2)});
@@ -13,8 +23,9 @@ var UnitPriceView = Backbone.View.extend({
   events: {
     "swiperight": function() { this.model.destroy(); }
   },
-  initialize: function(){
+  initialize: function(data){
     this.model.on('destroy',this.remove,this);
+    this.product = data.product;
     this.render();
   },
   render: function(){
@@ -24,9 +35,9 @@ var UnitPriceView = Backbone.View.extend({
       .css('display', 'none')
   },
   template: function(unitprice){
-    var rate = $('#add_amount').data('rate');
-    var amount_unit = $('#add_amount').data('unit');
-    var group_unit = $('#add_group').data('unit');
+    var rate = this.product.get("rate");
+    var amount_unit = this.product.get("amount_unit");
+    var group_unit = this.product.get("group_unit");
 
     return $('<span/>')
       .append($('<span/>')
@@ -51,6 +62,7 @@ var ProductView = Backbone.View.extend({
   },
   initialize: function(){
     this.collection = new UnitPriceList();
+    this.model = new Product();
     this.collection.on("add", this.addOne, this);
     this.collection.on("reset", this.clearAll, this);
     this.collection.on("all", this.render, this);
@@ -68,7 +80,10 @@ var ProductView = Backbone.View.extend({
     $('#unit_list').listview('refresh');
   },
   addOne: function(unitprice){
-    var unitpriceView = new UnitPriceView({model: unitprice});
+    var unitpriceView = new UnitPriceView({
+      model: unitprice,
+      product: this.model
+    });
     var $unitprice_el = unitpriceView.$el;
 
     var before_count = $('#unit_list li').size();
@@ -94,7 +109,6 @@ var ProductView = Backbone.View.extend({
     var price = $('#add_price').val();
     var amount = $('#add_amount').val();
     var group = $('#add_group').val();
-    var rate = $('#add_amount').data('rate');
 
     $('#add_price').val("");
     $('#add_amount').val("");
@@ -108,7 +122,7 @@ var ProductView = Backbone.View.extend({
       price: price,
       amount: amount,
       group: group,
-      rate: rate
+      rate: this.model.get("rate")
     });
 
     this.collection.add(unitprice);
