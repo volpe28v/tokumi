@@ -64,6 +64,29 @@ var UnitPriceView = Backbone.View.extend({
   }
 });
 
+var AddFormView = Backbone.View.extend({
+  el: "#add_form",
+  initialize: function(data){
+    this.product = data.product;
+    this.unitprices = data.unitprices;
+    this.unitprices.on("add", this.render, this);
+    
+    this.$price = $('#add_price');
+    this.$amount= $('#add_amount');
+    this.$group= $('#add_group');
+  },
+  render: function(unitprice){
+    this.$price.attr('placeholder', unitprice.get("price") + "円");
+    this.product.set("default_price", unitprice.get("price"));
+
+    this.$amount.attr('placeholder', unitprice.get("amount") + this.product.get("amount_unit"));
+    this.product.set("default_amount", unitprice.get("amount"));
+
+    this.$group.attr('placeholder', unitprice.get("group") + this.product.get("group_unit"));
+    this.product.set("default_group", unitprice.get("group"));
+  }
+});
+
 var ProductView = Backbone.View.extend({
   el: "#product_page",
   events: {
@@ -79,6 +102,10 @@ var ProductView = Backbone.View.extend({
       default_price: $('#add_price').data('default'),
       default_amount: $('#add_amount').data('default'),
       default_group: $('#add_group').data('default')
+    });
+    this.addFormView = new AddFormView({
+      product: this.model,
+      unitprices: this.collection
     });
  
     this.collection.on("add", this.addOne, this);
