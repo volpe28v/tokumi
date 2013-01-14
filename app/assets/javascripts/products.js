@@ -83,6 +83,24 @@ var AddFormView = Backbone.View.extend({
   }
 });
 
+var CountView = Backbone.View.extend({
+  el: "#count",
+  initialize: function(data){
+    this.collection = data.collection;
+
+    this.collection.on("all", this.render, this);
+    this.render();
+  },
+  render: function(){
+    var count =  this.collection.length;
+    if ( count != 0 ){
+      this.$el.html( " (" + this.collection.length + ")" );
+    }else{
+      this.$el.html("");
+    }
+  }
+});
+
 var ProductView = Backbone.View.extend({
   el: "#product_page",
   events: {
@@ -101,6 +119,9 @@ var ProductView = Backbone.View.extend({
     });
     this.addFormView = new AddFormView({
       product: this.model
+    });
+    this.countView = new CountView({
+      collection: this.collection
     });
  
     this.collection.on("add", this.addOne, this);
