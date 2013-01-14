@@ -8,13 +8,13 @@
   <div data-role="content">
     <div class="ui-grid-b" id="add_form">
       <div class="ui-block-a">
-        <input type="tel" id="add_price" data-mini="true" data-default="<%= @product.default_price %>" placeholder="<%= @product.default_price %>円" />
+        <input type="tel" id="add_price" data-mini="true" data-default="<%= @product.default_price %>" />
       </div>
       <div class="ui-block-b">
-        <input type="tel" id="add_amount" data-mini="true" data-unit="<%= @product.amount_unit %>" data-rate="<%= @product.rate %>" data-default="<%= @product.default_amount %>" maxlength="50" placeholder="<%= @product.default_amount.to_s + @product.amount_unit %>" />
+        <input type="tel" id="add_amount" data-mini="true" data-unit="<%= @product.amount_unit %>" data-rate="<%= @product.rate %>" data-default="<%= @product.default_amount %>" maxlength="50" />
       </div>
       <div class="ui-block-c">
-        <input type="tel" id="add_group" data-mini="true" data-unit="<%= @product.group_unit %>" data-default="<%= @product.default_group %>" maxlength="50" placeholder="<%= @product.default_group.to_s + @product.group_unit %>" />
+        <input type="tel" id="add_group" data-mini="true" data-unit="<%= @product.group_unit %>" data-default="<%= @product.default_group %>" maxlength="50" />
       </div>
     </div><!-- /grid-a -->
     <a data-role="button" id="add_button" data-mini="false">単価を計算する</a>
