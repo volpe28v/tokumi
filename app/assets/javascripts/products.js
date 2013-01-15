@@ -101,6 +101,25 @@ var CountView = Backbone.View.extend({
   }
 });
 
+var ClearButtonView = Backbone.View.extend({
+  el: "#clear_button",
+  initialize: function(data){
+    this.collection = data.collection;
+
+    this.collection.on("all", this.render, this);
+    this.render();
+  },
+  render: function(){
+    var count =  this.collection.length;
+    if ( count != 0 ){
+      this.$el.fadeIn();
+    }else{
+      this.$el.fadeOut();
+    }
+  }
+});
+
+
 var ProductView = Backbone.View.extend({
   el: "#product_page",
   events: {
@@ -121,6 +140,9 @@ var ProductView = Backbone.View.extend({
       product: this.model
     });
     this.countView = new CountView({
+      collection: this.collection
+    });
+    this.clearButtonView = new ClearButtonView({
       collection: this.collection
     });
  

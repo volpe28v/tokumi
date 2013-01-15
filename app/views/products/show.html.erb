@@ -2,7 +2,7 @@
   <div data-role="header">
     <h1><%= @product.name %></h1>
     <%= link_to "商品一覧", products_path, :class => "ui-btn-left move-page" %>
-    <a id="clear_button" class="ui-btn-right" data-icon="delete">Clear</a>
+    <a id="clear_button" class="ui-btn-right" data-icon="delete" style="display: none;">Clear</a>
   </div>
 
   <div data-role="content">
