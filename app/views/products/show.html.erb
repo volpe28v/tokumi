@@ -17,7 +17,7 @@
         <input type="tel" id="add_group" data-mini="true" data-unit="<%= @product.group_unit %>" data-default="<%= @product.default_group %>" maxlength="50" />
       </div>
     </div><!-- /grid-a -->
-    <a data-role="button" id="add_button" data-mini="false">単価を計算する<span id="count"></span></a>
+    <a data-role="button" id="add_button" data-mini="false"><%= @product.rate %><%= @product.amount_unit %>あたりの単価を計算<span id="count"></span></a>
 
     <ul id="unit_list" data-role="listview" data-inset="true" data-split-icon="delete" data-split-theme="c"></ul>
   </div>
