@@ -103,6 +103,9 @@ var CountView = Backbone.View.extend({
 
 var ClearButtonView = Backbone.View.extend({
   el: "#clear_button",
+  events: {
+    "click": "clearUnitPriceList"
+  },
   initialize: function(data){
     this.collection = data.collection;
 
@@ -116,15 +119,16 @@ var ClearButtonView = Backbone.View.extend({
     }else{
       this.$el.fadeOut();
     }
+  },
+  clearUnitPriceList: function(){
+    this.collection.reset();
   }
 });
-
 
 var ProductView = Backbone.View.extend({
   el: "#product_page",
   events: {
-    "click #add_button": "addUnitPrice",
-    "click #clear_button": "clearUnitPriceList"
+    "click #add_button": "addUnitPrice"
   },
   initialize: function(){
     this.collection = new UnitPriceList();
@@ -210,7 +214,4 @@ var ProductView = Backbone.View.extend({
 
     this.collection.add(unitprice);
   },
-  clearUnitPriceList: function(){
-    this.collection.reset();
-  }
 });
