@@ -19,6 +19,7 @@ var Product = Backbone.Model.extend({
 });
 
 var UnitPrice = Backbone.Model.extend({
+  urlRoot: '/unitprices',
   initialize: function(data){
     this.set({value: ((data.price / (data.amount * data.group)) * data.rate).toFixed(2)});
   }
@@ -212,7 +213,16 @@ var ProductView = Backbone.View.extend({
       rate: this.model.get("rate")
     });
 
-    if ( this.collection.where(unitprice.toJSON()).length != 0 ){ return; }
+    var length = this.collection.length;
+    for ( var i = 0; i < length; i++){
+      var model = this.collection.at(i);
+      if ( model.get('price') == price && 
+           model.get('amount') == amount &&
+           model.get('group') == group){
+        return;
+      }
+    }
     this.collection.add(unitprice);
-  },
+    unitprice.save();
+  }
 });
