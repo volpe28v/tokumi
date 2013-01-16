@@ -212,6 +212,7 @@ var ProductView = Backbone.View.extend({
       rate: this.model.get("rate")
     });
 
+    if ( this.collection.where(unitprice.toJSON()).length != 0 ){ return; }
     this.collection.add(unitprice);
   },
 });
