@@ -26,7 +26,8 @@ var UnitPrice = Backbone.Model.extend({
 });
 
 var UnitPriceList = Backbone.Collection.extend({
-  model: UnitPrice
+  model: UnitPrice,
+  url: '/unitprices'
 });
 
 var UnitPriceView = Backbone.View.extend({
@@ -154,6 +155,13 @@ var ProductView = Backbone.View.extend({
     this.collection.on("add", this.addOne, this);
     this.collection.on("reset", this.clearAll, this);
     this.collection.on("all", this.render, this);
+
+    var that = this;
+    this.collection.fetch({
+      success: function(){
+        that.loadUnitPrices();
+      }
+    });
   },
   render: function(){
     $('#unit_list li').each(function(i){
@@ -166,6 +174,13 @@ var ProductView = Backbone.View.extend({
       }
     });
     $('#unit_list').listview('refresh');
+  },
+  loadUnitPrices: function(){
+    var length = this.collection.length;
+    for ( var i = 0; i < length; i++){
+      var model = this.collection.at(i);
+      this.addOne(model);
+    }
   },
   addOne: function(unitprice){
     var unitpriceView = new UnitPriceView({
