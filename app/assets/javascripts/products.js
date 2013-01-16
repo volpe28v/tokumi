@@ -135,6 +135,7 @@ var ProductView = Backbone.View.extend({
   initialize: function(){
     this.collection = new UnitPriceList();
     this.model = new Product({
+      id: $('#add_price').data('id'),
       rate: $('#add_amount').data('rate'),
       amount_unit: $('#add_amount').data('unit'),
       group_unit: $('#add_group').data('unit'),
@@ -158,6 +159,7 @@ var ProductView = Backbone.View.extend({
 
     var that = this;
     this.collection.fetch({
+      data: { product_id: this.model.get("id") },
       success: function(){
         that.loadUnitPrices();
       }
@@ -222,6 +224,7 @@ var ProductView = Backbone.View.extend({
     $('#add_group').val("");
 
     var unitprice = new UnitPrice({
+      product_id: this.model.get("id"),
       price: price,
       amount: amount,
       group: group,
