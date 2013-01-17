@@ -123,7 +123,10 @@ var ClearButtonView = Backbone.View.extend({
     }
   },
   clearUnitPriceList: function(){
-    this.collection.reset();
+    var model = null;
+    while (model = this.collection.pop()){
+      model.destroy();
+    }
   }
 });
 
