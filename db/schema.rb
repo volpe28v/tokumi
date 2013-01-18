@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130116141827) do
+ActiveRecord::Schema.define(:version => 20130118164927) do
 
   create_table "products", :force => true do |t|
     t.string   "name"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20130116141827) do
     t.integer  "group"
     t.float    "value"
     t.float    "rate"
+    t.boolean  "star"
   end
 
 end

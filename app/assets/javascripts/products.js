@@ -22,6 +22,9 @@ var UnitPrice = Backbone.Model.extend({
   urlRoot: '/unitprices',
   initialize: function(data){
     this.set({value: ((data.price / (data.amount * data.group)) * data.rate).toFixed(2)});
+  },
+  defaults: {
+    star: false,
   }
 });
 
@@ -33,7 +36,12 @@ var UnitPriceList = Backbone.Collection.extend({
 var UnitPriceView = Backbone.View.extend({
   tagName: 'li',
   events: {
-    "swiperight": function() { this.model.destroy(); }
+    "swiperight": function() { this.model.destroy(); },
+    "click": function() { 
+      this.$el.find(".star").fadeToggle('fast'); 
+      this.model.set({ star: !this.model.get("star") });
+      this.model.save();
+    }
   },
   initialize: function(data){
     this.model.on('destroy',this.remove,this);
@@ -44,7 +52,10 @@ var UnitPriceView = Backbone.View.extend({
     var unitpriceHtml = this.template(this.model);
     this.$el.html(unitpriceHtml)
       .attr("data-unitprice",this.model.get("value"))
-      .css('display', 'none')
+      .css('display', 'none');
+    if ( this.model.get("star") ){
+      this.$el.find(".star").fadeIn('fast'); 
+    }
   },
   template: function(unitprice){
     var rate = this.product.get("rate");
@@ -52,6 +63,9 @@ var UnitPriceView = Backbone.View.extend({
     var group_unit = this.product.get("group_unit");
 
     return $('<span/>')
+      .append($('<img/>')
+        .addClass("star ui-li-icon")
+        .attr('src',"/assets/star_red.png"))
       .append($('<span/>')
         .addClass("unit")
         .html(unitprice.get("value") + "円 "))

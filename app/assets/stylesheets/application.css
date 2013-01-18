@@ -14,13 +14,18 @@
 
 .unit {
   color: red;
+  margin-left: 14px;
 }
 
 .unit-body {
   margin-left: 10px;
+  font-size: 14px;
 }
 
 .unit-body span {
   margin-left: 10px;
 }
 
+.star {
+  display: none;
+}
